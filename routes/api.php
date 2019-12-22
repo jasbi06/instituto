@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+use Psr\Http\Message\ServerRequestInterface;
+use Tqdev\PhpCrudApi\Api;
+use Tqdev\PhpCrudApi\Config;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +19,19 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::any('/{any}', function (ServerRequestInterface $request) {
+    $databaseConnection = config('database.default');
+    $databaseBase = 'database.connections.' . $databaseConnection . '.';
+    $configAPI = new Config([
+        'username' => config($databaseBase . 'username'),
+        'password' => config($databaseBase . 'password'),
+        'database' => config($databaseBase . 'database'),
+        'address' => config($databaseBase . 'host'),
+        'basePath' => '/api',
+        'debug' => true,
+    ]);
+    $api = new Api($configAPI);
+    $response = $api->handle($request);
+    return $response;
+})->where('any', '.*');
