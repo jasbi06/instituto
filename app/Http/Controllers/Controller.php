@@ -21,7 +21,7 @@
  *  )
  *
  *  @OA\Server(
- *      url="https://projects.dev/api/v1",
+ *      url="http://instituto.test/api/records",
  *      description="L5 Swagger OpenApi Server"
  * )
  */
@@ -55,7 +55,7 @@
  * )
  *
  * @OA\Tag(
- *     name="user",
+ *     name="Users",
  *     description="Operations about user",
  *     @OA\ExternalDocumentation(
  *         description="Find out more about",
@@ -70,11 +70,11 @@
 
 /**
  * @OA\Get(
- *      path="/projects",
- *      operationId="getProjectsList",
- *      tags={"Projects"},
- *      summary="Get list of projects",
- *      description="Returns list of projects",
+ *      path="/users",
+ *      operationId="getUsersList",
+ *      tags={"Users"},
+ *      summary="Get list of users",
+ *      description="Returns list of users",
  *      @OA\Response(
  *          response=200,
  *          description="successful operation"
@@ -85,19 +85,19 @@
  *       }
  *     )
  *
- * Returns list of projects
+ * Returns list of users
  */
 
 /**
  * @OA\Get(
- *      path="/projects/{id}",
- *      operationId="getProjectById",
- *      tags={"Projects"},
- *      summary="Get project information",
- *      description="Returns project data",
+ *      path="/users/{id}",
+ *      operationId="getUserById",
+ *      tags={"Users"},
+ *      summary="Get user information",
+ *      description="Returns user data",
  *      @OA\Parameter(
  *          name="id",
- *          description="Project id",
+ *          description="User id",
  *          required=true,
  *          in="path",
  *          @OA\Schema(
@@ -112,7 +112,7 @@
  *      @OA\Response(response=404, description="Resource Not Found"),
  *      security={
  *         {
- *             "oauth2_security_example": {"write:projects", "read:projects"}
+ *             "oauth2_security_example": {"write:users", "read:users"}
  *         }
  *     },
  * )
