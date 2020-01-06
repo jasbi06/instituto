@@ -12,5 +12,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        if(env('ENV') != 'production') {
+            \Illuminate\Support\Facades\DB::table('users')->truncate();
+            $users = factory(App\User::class, 3)->create();
+        }
     }
 }
