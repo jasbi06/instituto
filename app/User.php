@@ -37,4 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get centro for the users
+     */
+    public function centros()
+    {
+        return $this->hasMany('App\Centro','coordinador');
+    }
 }
