@@ -11,9 +11,9 @@ $factory->define(Model::class, function (Faker $faker) {
         'letra' => $faker->randomLetter,
         'nombre' => $faker->company,
         //'tutor' => $faker->randomNumber(),
-        //'anyoescolar' => $faker->unique()->randomNumber(),
+        //'anyoescolar' => $faker->numberBetween($min = 1, $max = 3),
         //'nivel' => $faker->unique()->randomNumber(),
         'verificado' => $faker->boolean($chanceOfGettingTrue = 80),
-        //'creador' => $faker->unique()->randomNumber()
+        //'creador' =>$faker->numberBetween($min = 1, $max = 100)
     ];
 });
