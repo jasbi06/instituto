@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Nivel extends Model
 {
     protected $table = 'niveles';
+<<<<<<< HEAD
 
     public function niveles() {
         return $this->hasMany('\App\Nivel','nivelsuperior');
@@ -17,4 +18,6 @@ class Nivel extends Model
     }
 
 
+=======
+>>>>>>> 6c9bfb4d2af4c1583f6da58fe88fb3f6fd924686
 }
