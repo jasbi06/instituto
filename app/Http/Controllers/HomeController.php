@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $tutor = \App\Grupo::find(1)->matriculas;
+        var_dump($tutor);exit();
         return view('home');
     }
 }
