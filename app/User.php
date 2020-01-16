@@ -55,6 +55,6 @@ class User extends Authenticatable
     }
 
     public function tutor() {
-        return $this->hasOne('App\Tutorizado', 'tutor');
+        return $this->hasMany('App\Tutorizado', 'tutor');
     }
 }
