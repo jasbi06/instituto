@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| JQuery Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/personas', function () {
+    return view('jquery.personas');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
