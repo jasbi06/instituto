@@ -6,7 +6,7 @@ function loadUsers() {
     $("#dataJQuery").html("");
     var table = document.createElement("table");
     table.classList.add("tableData");
-    $.getJSON("api/records/users", function(result) {
+    $.getJSON("/api/records/users", function(result) {
         $.each(result.records, function(i, user) {
             table.appendChild(loadUser(user));
         });
@@ -15,7 +15,7 @@ function loadUsers() {
 }
 
 function loadUser(user) {
-    
+
     var tr = document.createElement("tr");
     tr.classList.add("fila");
     var id = document.createElement("td");
