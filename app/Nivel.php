@@ -26,6 +26,4 @@ class Nivel extends Model
     public function nivelObject() {
         return $this->belongsTo('\App\Nivel','nivelsuperior');
     }
-
-
 }

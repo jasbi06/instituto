@@ -9,6 +9,7 @@ class Materiaimpartida extends Model
     protected $table = 'materiasimpartidas';
 
     public function userObject() {
+<<<<<<< HEAD
         return $this->belongsTo('\App\User','id','docente');
     }
 
@@ -18,5 +19,16 @@ class Materiaimpartida extends Model
 
     public function materiaObject() {
         return $this->belongsTo('\App\Materia','id','materia');
+=======
+        return $this->belongsTo('\App\User', 'docente');
+    }
+
+    public function grupoObject() {
+        return $this->belongsTo('\App\Grupo', 'grupo');
+    }
+
+    public function materiaObject() {
+        return $this->belongsTo('\App\Materia','materia');
+>>>>>>> ce7ae7b1a91cd601858f15a3a8a05a99fc87be17
     }
 }
