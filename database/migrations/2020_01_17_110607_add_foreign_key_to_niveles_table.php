@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNivelsTable extends Migration
+class AddForeignKeyToNivelesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateNivelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('niveles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->bigInteger('nivelsuperior')->nullable()->unsigned();
-            $table->timestamps();
+        Schema::table('niveles', function (Blueprint $table) {
+            $table->foreign('nivelsuperior')->references('id')->on('niveles');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateNivelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('niveles');
+        Schema::table('niveles', function (Blueprint $table) {
+            $table->dropForeign('niveles_nivelsuperior_foreign');
+        });
     }
 }
