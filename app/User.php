@@ -92,9 +92,6 @@ class User extends Authenticatable
         return $this->hasMany('App\Tutorizado', 'tutorado');
     }
 
-    /**
-     * Get the tutores for the user as tutor.
-     */
     public function tutores() {
         return $this->hasMany('App\Tutorizado', 'tutor');
     }
