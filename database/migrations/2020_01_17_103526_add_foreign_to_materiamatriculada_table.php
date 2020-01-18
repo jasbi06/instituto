@@ -26,7 +26,7 @@ class AddForeignToMateriamatriculadaTable extends Migration {
        Schema::table('materiamatriculada', function (Blueprint $table) {
             $table->dropForeign('materiamatriculada_alumno_foreign');
             $table->dropForeign('materiamatriculada_grupo_foreign');
-            $table->dropForeign('materiamatriculada_materias_foreign');
+            $table->dropForeign('materiamatriculada_materia_foreign');
         });
 
     }
