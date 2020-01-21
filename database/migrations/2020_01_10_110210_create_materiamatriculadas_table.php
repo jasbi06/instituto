@@ -12,7 +12,7 @@ class CreateMateriamatriculadasTable extends Migration {
      */
 
     public function up() {
-        Schema::create('materiamatriculada', function (Blueprint $table) {
+        Schema::create('materiasmatriculadas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('alumno')->unsigned();
             $table->bigInteger('materia')->unsigned();
@@ -27,6 +27,6 @@ class CreateMateriamatriculadasTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('materiamatriculada');
+        Schema::dropIfExists('materiasmatriculadas');
     }
 }

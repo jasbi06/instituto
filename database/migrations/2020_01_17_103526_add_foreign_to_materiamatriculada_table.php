@@ -11,7 +11,7 @@ class AddForeignToMateriamatriculadaTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::table('materiamatriculada', function (Blueprint $table) {
+        Schema::table('materiasmatriculadas', function (Blueprint $table) {
             $table->foreign('alumno')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('grupo')->references('id')->on('grupos')->onDelete('cascade');
             $table->foreign('materia')->references('id')->on('materias')->onDelete('cascade');
@@ -23,10 +23,10 @@ class AddForeignToMateriamatriculadaTable extends Migration {
      * @return void
      */
     public function down() {
-       Schema::table('materiamatriculada', function (Blueprint $table) {
-            $table->dropForeign('materiamatriculada_alumno_foreign');
-            $table->dropForeign('materiamatriculada_grupo_foreign');
-            $table->dropForeign('materiamatriculada_materia_foreign');
+       Schema::table('materiasmatriculadas', function (Blueprint $table) {
+            $table->dropForeign('materiasmatriculadas_alumno_foreign');
+            $table->dropForeign('materiasmatriculadas_grupo_foreign');
+            $table->dropForeign('materiasmatriculadas_materia_foreign');
         });
 
     }
