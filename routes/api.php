@@ -19,6 +19,10 @@ use Tqdev\PhpCrudApi\Config;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::apiResource('materia', 'API\MateriaController')->parameters([
+    'materia' => 'materia'
+]);
+Route::apiResource('materiamatriculada', 'API\MateriamatriculadaController');
 
 Route::any('/{any}', function (ServerRequestInterface $request) {
     $databaseConnection = config('database.default');
@@ -35,3 +39,5 @@ Route::any('/{any}', function (ServerRequestInterface $request) {
     $response = $api->handle($request);
     return $response;
 })->where('any', '.*');
+
+
