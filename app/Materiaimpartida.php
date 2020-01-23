@@ -8,6 +8,8 @@ class Materiaimpartida extends Model
 {
     protected $table = 'materiasimpartidas';
 
+    protected $fillable = ['docente','grupo','materia'];
+
     public function userObject() {
 <<<<<<< HEAD
         return $this->belongsTo('\App\User','id','docente');
