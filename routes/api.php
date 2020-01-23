@@ -19,6 +19,10 @@ use Tqdev\PhpCrudApi\Config;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::apiResource('materias', 'API\MateriaController')->parameters([
+    'materia' => 'materia'
+]);
+Route::apiResource('materiamatriculadas', 'API\MateriamatriculadaController');
 
 // Rutas adicionales a las de los Resources
 Route::get('users/profile/{user_id}', 'API\UserController@profile');
@@ -54,3 +58,5 @@ Route::any('/{any}', function (ServerRequestInterface $request) {
     $response = $api->handle($request);
     return $response;
 })->where('any', '.*');
+
+
