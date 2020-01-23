@@ -17,7 +17,7 @@ class MatriculaResource extends JsonResource
         return [
             'id' => $this->id,
             'alumno' => $this->alumnoObject,
-            'grupo' => $this->grupo,
+            'grupo' => $this->grupoObject,
         ];
     }
 }
