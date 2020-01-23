@@ -52,7 +52,7 @@ class AnyoEscolarController extends Controller
      * @param \App\Anyoescolar $anyoescolar
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AnyoEscolarController $anyoescolar)
+    public function update(Request $request, Anyoescolar $anyoescolar)
     {
         $anyoescolar->update(json_decode($request->getContent(), true));
         return new AnyoEscolarResource($anyoescolar);
@@ -64,7 +64,7 @@ class AnyoEscolarController extends Controller
      * @param \App\Anyoescolar $anyoescolar
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnyoEscolarController $anyoescolar)
+    public function destroy(Anyoescolar $anyoescolar)
     {
         $anyoescolar->delete();
     }
