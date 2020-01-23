@@ -10,4 +10,7 @@ class Matricula extends Model
     public function alumnoObject() {
         return $this->belongsTo('App\User', 'alumno');
     }
+    public function grupoObject() {
+        return $this->belongsTo('App\Grupo', 'grupo');
+    }
 }
