@@ -20,6 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResource('anyosescolares', 'API\AnyoEscolarController')->parameters(['anyosescolares' => 'anyoescolar']);
+
+Route::apiResource('grupos', 'API\GrupoController');
+
 Route::any('/{any}', function (ServerRequestInterface $request) {
     $databaseConnection = config('database.default');
     $databaseBase = 'database.connections.' . $databaseConnection . '.';
