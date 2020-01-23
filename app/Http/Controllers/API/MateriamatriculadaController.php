@@ -16,7 +16,7 @@ class MateriamatriculadaController extends Controller
      */
     public function index()
     {
-        return MateriamatriculadaResource::collection(Materiamatriculada::all());
+        return MateriamatriculadaResource::collection(Materiamatriculada::paginate());
     }
 
     /**
@@ -41,7 +41,7 @@ class MateriamatriculadaController extends Controller
      */
     public function show(Materiamatriculada $materiamatriculada)
     {
-         return new MateriamatriculadaResource($materia);
+         return new MateriamatriculadaResource($materiamatriculada);
     }
 
     /**
