@@ -47,6 +47,11 @@ Route::apiResource('anyosescolares', 'API\AnyoEscolarController')->parameters(['
 
 Route::apiResource('grupos', 'API\GrupoController');
 
+
+Route::apiResource('matriculas', 'API\MatriculaController');
+Route::apiResource('tutorizados', 'API\TutorizadoController');
+
+
 Route::any('/{any}', function (ServerRequestInterface $request) {
     $databaseConnection = config('database.default');
     $databaseBase = 'database.connections.' . $databaseConnection . '.';
