@@ -20,6 +20,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Rutas adicionales a las de los Resources
+Route::get('users/profile/{user_id}', 'API\UserController@profile');
+
+Route::apiResource('users', 'API\UserController')->parameters([
+    'users' => 'user'
+]);
+
+Route::apiResource('centros', 'API\CentroController')->parameters([
+    'centros' => 'centro'
+]);
+
 Route::apiResource('niveles', 'API\NivelController')->parameters([
     'niveles' => 'nivel'
 ]);
