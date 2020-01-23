@@ -43,6 +43,10 @@ Route::apiResource('materiasimpartidas', 'API\MateriaimpartidaController')->para
     'materiasimpartidas' => 'materiaimpartida'
 ]);
 
+Route::apiResource('anyosescolares', 'API\AnyoEscolarController')->parameters(['anyosescolares' => 'anyoescolar']);
+
+Route::apiResource('grupos', 'API\GrupoController');
+
 Route::any('/{any}', function (ServerRequestInterface $request) {
     $databaseConnection = config('database.default');
     $databaseBase = 'database.connections.' . $databaseConnection . '.';
