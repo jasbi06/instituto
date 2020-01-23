@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Matricula;
 use Illuminate\Http\Request;
+use App\Http\Resources\MatriculaResource;
 
 class MatriculaController extends Controller
 {
@@ -15,7 +16,7 @@ class MatriculaController extends Controller
      */
     public function index()
     {
-        //
+        return MatriculaResource::collection(Matricula::paginate());
     }
 
     /**
@@ -24,9 +25,10 @@ class MatriculaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Matricula $matricula)
     {
-        //
+        $matricula = Matricula::create(json_decode($request->getContent(), true));
+        return new MatriculaResource($matricula);
     }
 
     /**
@@ -37,7 +39,7 @@ class MatriculaController extends Controller
      */
     public function show(Matricula $matricula)
     {
-        echo 'HOLA';
+        return new MatriculaResource($matricula);
     }
 
     /**
@@ -49,7 +51,8 @@ class MatriculaController extends Controller
      */
     public function update(Request $request, Matricula $matricula)
     {
-        //
+        $matricula->update(json_decode($request->getContent(), true));
+        return new MatriculaResource($matricula);
     }
 
     /**
@@ -60,6 +63,6 @@ class MatriculaController extends Controller
      */
     public function destroy(Matricula $matricula)
     {
-        //
+        $matricula->delete();
     }
 }

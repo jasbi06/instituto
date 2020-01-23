@@ -7,7 +7,6 @@ use App\Tutorizado;
 use Illuminate\Http\Request;
 use App\Http\Resources\TutorizadoResource;
 
-
 class TutorizadoController extends Controller
 {
     /**
@@ -17,7 +16,7 @@ class TutorizadoController extends Controller
      */
     public function index()
     {
-        return TutorizadoResource::collection(Tutorizado::all());
+        return TutorizadoResource::collection(Tutorizado::paginate());
     }
 
     /**
@@ -28,7 +27,8 @@ class TutorizadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tutorizado = Tutorizado::create(json_decode($request->getContent(), true));
+        return new TutorizadoResource($tutorizado);
     }
 
     /**
@@ -51,7 +51,8 @@ class TutorizadoController extends Controller
      */
     public function update(Request $request, Tutorizado $tutorizado)
     {
-        //
+        $tutorizado->update(json_decode($request->getContent(), true));
+        return new TutorizadoResource($tutorizado);
     }
 
     /**
@@ -62,6 +63,6 @@ class TutorizadoController extends Controller
      */
     public function destroy(Tutorizado $tutorizado)
     {
-        //
+        $tutorizado->delete();
     }
 }
