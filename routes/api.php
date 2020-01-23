@@ -20,6 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResource('niveles', 'API\NivelController')->parameters([
+    'niveles' => 'nivel'
+]);
+
+Route::apiResource('materiasimpartidas', 'API\MateriaimpartidaController')->parameters([
+    'materiasimpartidas' => 'materiaimpartida'
+]);
+
 Route::any('/{any}', function (ServerRequestInterface $request) {
     $databaseConnection = config('database.default');
     $databaseBase = 'database.connections.' . $databaseConnection . '.';
