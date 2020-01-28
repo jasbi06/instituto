@@ -37,6 +37,8 @@ Route::middleware('auth:api')->group(function() {
         'niveles' => 'nivel'
     ]);
 
+    Route::put('grupos/asignaTutor/{grupo_id}/{user_id}', 'API\GrupoController@asignaTutor');
+
     Route::apiResource('grupos', 'API\GrupoController');
 
     Route::apiResource('matriculas', 'API\MatriculaController');
