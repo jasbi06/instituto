@@ -6,9 +6,15 @@ use App\Grupo;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GrupoResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GrupoController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Grupo::class, 'grupo');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +33,10 @@ class GrupoController extends Controller
      */
     public function store(Request $request)
     {
-        $grupo = Grupo::create(json_decode($request->getContent(), true));
+        $g = json_decode($request->getContent(),true);
+        $g['creador'] = Auth::id();
+        $grupo = Grupo::create($g, true);
+
         return new GrupoResource($grupo);
     }
 
