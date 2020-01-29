@@ -99,10 +99,30 @@ class User extends Authenticatable
     public function isSuperAdmin() {
         return $this->email === config('app.superadmin_email');
     }
-    
+
     public function isCoordinadorCentro(Centro $centro = null)
     {
-        return true;
+
+        $booleano = true;
+
+        if($centro == null){
+            $idUser = $this->id;
+            //hay que ver todos los centros
+            $encontrado = Centro::where('coordinador' , $idUser)->get();
+            if($encontrado == null){
+                //no es coordinador
+                $booleano = false;
+            }
+        } else {
+            //hay que comprobar si es de un centro en concreto
+            $idUser = $this->id;
+            $idCentroCoordinador = $centro->coordinador;
+            if($idUser !== $idCentroCoordinador){
+                //no es coordinador de ese centro en concreto
+                $booleano = false;
+            }
+        }
+        return $booleano;
     }
 
     public function isProfesorCentro(Centro $centro = null)
