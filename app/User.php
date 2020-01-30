@@ -127,7 +127,17 @@ class User extends Authenticatable
 
     public function isProfesorCentro(Centro $centro = null)
     {
-        return true;
+        $rtn = false;
+
+        if($centro === null) {
+            $rtn = Materiaimpartida::where('docente',$this->id)->first() ? true : false;
+        } else {
+            $gruposCentro = $centro->misGrupos()->get();
+            $gruposImpartidos = $this->misGruposImpartidos()->get();
+            $rtn = $gruposCentro->intersect($gruposImpartidos)->count() > 0 ? true : false;
+        }
+
+        return $this->isCoordinadorCentro($centro) || $rtn;
     }
 
     public function isAlumnoCentro(Centro $centro = null)
@@ -143,5 +153,16 @@ class User extends Authenticatable
     public function isTutorGrupo(Grupo $grupo = null)
     {
         return true;
+    }
+
+    public function misGruposImpartidos() {
+        return $this->hasManyThrough(
+            'App\Grupo',
+            'App\Materiaimpartida',
+            'docente', // Foreign key on anyosescolares table...
+            'id', // Foreign key on grupos table...
+            'id', // Local key on centros table...
+            'grupo' // Local key on anyosescolares table...
+        );
     }
 }
