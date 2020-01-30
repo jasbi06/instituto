@@ -41,9 +41,7 @@ class NivelPolicy
      */
     public function create(User $user)
     {
-        return ($user -> isSuperAdmin() || $user -> isCoordinadorCentro($centro = null) );
-
-        
+        return ($user -> isCoordinadorCentro($centro = null));
     }
 
     /**
@@ -55,8 +53,7 @@ class NivelPolicy
      */
     public function update(User $user, Nivel $nivel)
     {
-
-        return ($user -> isSuperAdmin());
+        return false;
     }
 
     /**
@@ -68,7 +65,7 @@ class NivelPolicy
      */
     public function delete(User $user, Nivel $nivel)
     {
-        return ($user -> isSuperAdmin());
+        return false;
     }
 
     /**

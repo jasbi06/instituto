@@ -99,7 +99,7 @@ class User extends Authenticatable
     public function isSuperAdmin() {
         return $this->email === config('app.superadmin_email');
     }
-    
+
     public function isCoordinadorCentro(Centro $centro = null)
     {
         return true;
