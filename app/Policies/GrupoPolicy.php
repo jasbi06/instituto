@@ -41,7 +41,13 @@ class GrupoPolicy
      * @return mixed
      */
     public function create(User $user)
-    {
+    {   
+        if($user->isSuperAdmin() || $user->isTutorGrupo()){
+            return Response::allow();
+        }else{
+            return Response::deny('No está autorizado para realizar esta acción');
+        }
+        
         return $user->isProfesorCentro()
             ? Response::allow()
             : Response::deny('No tienes permiso para crear un nuevo Año Escolar');
