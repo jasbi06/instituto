@@ -18,7 +18,7 @@ class NivelPolicy
      */
     public function viewAny(User $user)
     {
-
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class NivelPolicy
      */
     public function view(User $user, Nivel $nivel)
     {
-
+        return true;
     }
 
     /**
@@ -41,11 +41,9 @@ class NivelPolicy
      */
     public function create(User $user)
     {
-        return ($user -> isSuperAdmin());
+        return ($user -> isSuperAdmin() || $user -> isCoordinadorCentro($centro = null) );
 
-        if($user -> isCoordinadorCentro($centro = null) = true){
-            return true;
-        }
+        
     }
 
     /**
@@ -82,7 +80,7 @@ class NivelPolicy
      */
     public function restore(User $user, Nivel $nivel)
     {
-
+        //
     }
 
     /**
@@ -94,6 +92,13 @@ class NivelPolicy
      */
     public function forceDelete(User $user, Nivel $nivel)
     {
-        return ($user -> isSuperAdmin());
+        //
+    }
+
+    public function before($user, $ability)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 }
