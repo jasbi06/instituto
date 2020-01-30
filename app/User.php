@@ -108,27 +108,16 @@ class User extends Authenticatable
     public function isProfesorCentro(Centro $centro = null)
     {
         $rtn = false;
+
         if($centro === null) {
-            $this->isCoordinadorCentro() ? $rtn = true : false;
-            Materiaimpartida::where('docente',$this->id)->first() ? $rtn = true : false;
+            $rtn = Materiaimpartida::where('docente',$this->id)->first() ? true : false;
         } else {
-            //Centro::where('coordinador',$this->id)->count() > 0 ? $rtn = true : false;
-            $this->isCoordinadorCentro($centro) ? $rtn = true : false;
-            $materiasImpartidas = Materiaimpartida::where('docente',$this->id)->get();
-            foreach ($materiasImpartidas as $materia) {
-               $grupos = Grupo::where('id',$materia->grupo)->get();
-               foreach($grupos as $grupo){
-                    $anyos = Anyoescolar::where('id',$grupo->anyoescolar)->get();
-                    foreach($anyos as $anyo) {
-                        $anyo->centro == $centro->id ? $rtn = true : false;
-                    }
-                }
-            }
-            //$materiasImpartidas = Materiaimpartida::where('docente',$this->id)->get();
-            //$anyos = Anyoescolar::where('centro',$centro->id)->get();
-            //$materiasImpartidas->intersect($anyos)->count() > 0 ? $rtn = true : false;
+            $gruposCentro = $centro->misGrupos()->get();
+            $gruposImpartidos = $this->misGruposImpartidos()->get();
+            $rtn = $gruposCentro->intersect($gruposImpartidos)->count() > 0 ? true : false;
         }
-        return $rtn;
+
+        return $this->isCoordinadorCentro($centro) || $rtn;
     }
 
     public function isAlumnoCentro(Centro $centro = null)
@@ -144,5 +133,16 @@ class User extends Authenticatable
     public function isTutorGrupo(Grupo $grupo = null)
     {
         return true;
+    }
+
+    public function misGruposImpartidos() {
+        return $this->hasManyThrough(
+            'App\Grupo',
+            'App\Materiaimpartida',
+            'docente', // Foreign key on anyosescolares table...
+            'id', // Foreign key on grupos table...
+            'id', // Local key on centros table...
+            'grupo' // Local key on anyosescolares table...
+        );
     }
 }
