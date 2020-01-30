@@ -33,10 +33,13 @@ class GrupoController extends Controller
      */
     public function store(Request $request)
     {
-        $g = json_decode($request->getContent(),true);
-        $g['creador'] = Auth::id();
-        $grupo = Grupo::create($g, true);
-
+        $datosPOST = json_decode($request->getContent(), true);
+        $user = $request->user();
+        if(!$user->isSuperAdmin()){
+            $datosPOST['creador'] = Auth::id();
+        }
+        
+        $grupo = Grupo::create($datosPOST);
         return new GrupoResource($grupo);
     }
 
