@@ -137,7 +137,14 @@ class User extends Authenticatable
 
     public function isCreadorGrupo(Grupo $grupo = null)
     {
-        return true;
+        $booleano = true;
+        $idUser = $this->id;
+        if ($grupo == null) {
+            $booleano = Grupo::where('creador', $idUser)->get() ? true : false;
+        } else {
+            $booleano = ($idUser == $grupo->creador);
+        }
+        return $booleano;
     }
 
     public function isTutorGrupo(Grupo $grupo = null)
