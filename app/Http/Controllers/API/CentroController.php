@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use App\Centro;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CentroResource;
@@ -33,8 +34,14 @@ class CentroController extends Controller
      */
     public function store(Request $request)
     {
-        $centro = Centro::create(json_decode($request->getContent(), true));
 
+        $centro = json_decode($request->getContent(), true);
+
+        if(!Auth::user()->isSuperAdmin()){
+            $centro['coordinador'] = Auth::id();
+        }
+
+        $centro = Centro::create($centro);
         return new CentroResource($centro);
     }
 
