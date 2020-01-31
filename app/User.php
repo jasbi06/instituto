@@ -185,12 +185,12 @@ class User extends Authenticatable
 
     public function misGruposImpartidos() {
         return $this->hasManyThrough(
-            'App\Grupo',
-            'App\Materiaimpartida',
-            'docente', // Foreign key on anyosescolares table...
-            'id', // Foreign key on grupos table...
-            'id', // Local key on centros table...
-            'grupo' // Local key on anyosescolares table...
+            'App\Grupo', //Destino
+            'App\Materiaimpartida', //Intermedio
+            'docente', // Foreign Key User > Materiaimpartida
+            'id', // Foreign Key Materiaimpartida > Grupo
+            'id', // Local Key User
+            'grupo' // Local Key Materiaimpartida
         );
     }
 }
