@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use App\Centro;
 use App\User;
 use App\Policies\CentroPolicy;
@@ -36,12 +37,19 @@ class CentroController extends Controller
      */
     public function store(Request $request)
     {
-        $break_data = json_decode($request->getContent(), true);
-        if(in_array("verificado", $break_data)){
-                 unset($break_data['verificado']);
+
+        $centro = json_decode($request->getContent(), true);
+
+        if(!Auth::user()->isSuperAdmin()){
+            $centro['coordinador'] = Auth::id();
         }
-        $centro = Centro::create(json_decode($request->getContent(), true));
-        
+      
+        if(in_array("verificado", $centro)){
+                 unset($centro['verificado']);
+        }
+
+        $centro = Centro::create($centro);
+      
         return new CentroResource($centro);
     }
 
