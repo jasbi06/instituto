@@ -6,7 +6,7 @@ use App\Materia;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class materiaPolicy
+class MateriaPolicy
 {
     use HandlesAuthorization;
 
@@ -96,4 +96,5 @@ class materiaPolicy
         if ($user->isSuperAdmin()) {
             return true;
         }
+    }
 }
