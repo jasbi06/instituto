@@ -97,6 +97,21 @@ class CentroPolicy
         //
     }
 
+    
+    /**
+     * Determine whether the user can permanently delete the centro.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Centro  $centro
+     * @return mixed
+     */
+    public function verificado(User $user, Centro $centro)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+    }
+    
     public function before($user, $ability)
     {
         if ($user->isSuperAdmin()) {

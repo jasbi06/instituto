@@ -21,6 +21,8 @@ Route::middleware('auth:api')->group(function() {
 // Rutas adicionales a las de los Resources
     Route::get('users/profile/{user_id}', 'API\UserController@profile');
 
+    Route::put('centro/verifica/{centro_id}', 'API\CentroController@verificado');
+
     Route::apiResource('users', 'API\UserController')->parameters([
         'users' => 'user'
     ]);
@@ -30,7 +32,9 @@ Route::middleware('auth:api')->group(function() {
     Route::apiResource('centros', 'API\CentroController')->parameters([
         'centros' => 'centro'
     ]);
-
+    
+    
+    
     Route::apiResource('anyosescolares', 'API\AnyoEscolarController')->parameters(['anyosescolares' => 'anyoescolar']);
 
     Route::apiResource('niveles', 'API\NivelController')->parameters([
