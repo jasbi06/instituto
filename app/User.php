@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -143,5 +144,25 @@ class User extends Authenticatable
     public function isTutorGrupo(Grupo $grupo = null)
     {
         return true;
+    }
+
+    public function misProfesores(Nivel $nivel = null){
+        //tenemos que sacar todas las matrículas que tiene un usuario
+        $id = $this->id;
+        $misMaterias = Materiamatriculada::where('alumno' , $id)->get();
+        //ahora que tenemos las materias sacadas, los recorremos
+
+        for($i =0; $i < count($misMaterias); $i++){
+            $materias[$i] = $misMaterias[$i]->materia;
+        }
+
+        for($i =0; $i < count($materias); $i++){
+            $aux = Materiaimpartida::where('materia' , $materias[$i])->first();
+            $docente[$i] = $aux->userObject;
+        }
+
+        //$docente = json_encode($docente);
+
+        return $docente;
     }
 }
