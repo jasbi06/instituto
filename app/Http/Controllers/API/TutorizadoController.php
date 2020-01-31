@@ -76,13 +76,11 @@ class TutorizadoController extends Controller
 
     public function verificar(Request $request, $tutor, $token) {
 
-        $tutorizado = Tutorizado::where('tutor', $tutor)->first();
-        if ($token == $tutorizado['verificadoToken']) {
-            $tutorizado['verificado'] = true;
+        if($tutorizado = Tutorizado::where([['tutor', $tutor],['verificadoToken', $token]])->first()) {
+            $tutorizado->update(['verificado' => true]);
         }
-        $tutorizado->update();
 
-        return new TutorizadoResource($tutorizado);
+        return redirect('home');
 
     }
 }
