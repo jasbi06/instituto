@@ -104,4 +104,11 @@ class MatriculaPolicy
     {
         //
     }
+
+    public function before($user, $ability)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+    }
 }
