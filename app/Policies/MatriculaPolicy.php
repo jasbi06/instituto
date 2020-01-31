@@ -40,9 +40,11 @@ class MatriculaPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Matricula $matricula)
     {
-        return (Auth::user()->isSuperAdmin() || Auth::user()->isCoordinadorCentro($centro) || Auth::user()->isCreadorGrupo($grupo) || Auth::user()->isTutorGrupo($grupo))
+        $user = Auth::user();
+        $grupo = $matricula->grupoObject;
+        return ( $user->isCoordinadorCentro($centro) || $user->isCreadorGrupo($grupo) || $user->isTutorGrupo($grupo))
         ? Response::allow();
         : Response::deny('Usted no tiene permisos para esta acción');
     }
@@ -56,7 +58,9 @@ class MatriculaPolicy
      */
     public function update(User $user, Matricula $matricula)
     {
-        return (Auth::user()->isSuperAdmin() || Auth::user()->isCoordinadorCentro($centro) || Auth::user()->isCreadorGrupo($grupo) || Auth::user()->isTutorGrupo($grupo))
+        $user = Auth::user();
+        $grupo = $matricula->grupoObject;
+        return ( $user->isCoordinadorCentro($centro) || $user->isCreadorGrupo($grupo) || $user->isTutorGrupo($grupo))
         ? Response::allow();
         : Response::deny('Usted no tiene permisos para esta acción');
     }
@@ -70,7 +74,9 @@ class MatriculaPolicy
      */
     public function delete(User $user, Matricula $matricula)
     {
-        return (Auth::user()->isSuperAdmin() || Auth::user()->isCoordinadorCentro($centro) || Auth::user()->isCreadorGrupo($grupo) || Auth::user()->isTutorGrupo($grupo))
+        $user = Auth::user();
+        $grupo = $matricula->grupoObject;
+        return ( $user->isCoordinadorCentro($centro) || $user->isCreadorGrupo($grupo) || $user->isTutorGrupo($grupo))
         ? Response::allow();
         : Response::deny('Usted no tiene permisos para esta acción');
     }
@@ -97,5 +103,12 @@ class MatriculaPolicy
     public function forceDelete(User $user, Matricula $matricula)
     {
         //
+    }
+
+    public function before($user, $ability)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 }
