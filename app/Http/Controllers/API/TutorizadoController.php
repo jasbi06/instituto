@@ -27,7 +27,9 @@ class TutorizadoController extends Controller
      */
     public function store(Request $request)
     {
-        $tutorizado = Tutorizado::create(json_decode($request->getContent(), true));
+        $tutorizado = json_decode($request->getContent(), true);
+        unset($tutorizado['verificado']);
+        $tutorizado = Tutorizado::create($tutorizado);
         return new TutorizadoResource($tutorizado);
     }
 
@@ -64,5 +66,17 @@ class TutorizadoController extends Controller
     public function destroy(Tutorizado $tutorizado)
     {
         $tutorizado->delete();
+    }
+
+    public function verificar(Request $request, $tutor, $token) {
+
+        $tutorizado = Tutorizado::where('tutor', $tutor)->first();
+        if ($token == $tutorizado['verificadoToken']) {
+            $tutorizado['verificado'] = true;
+        }
+        $tutorizado->update();
+
+        return new TutorizadoResource($tutorizado);
+
     }
 }

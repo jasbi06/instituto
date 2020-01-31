@@ -27,6 +27,8 @@ Route::middleware('auth:api')->group(function() {
 
     Route::apiResource('tutorizados', 'API\TutorizadoController');
 
+    Route::put('tutorizados/verifica/{tutor_id}/{token}', 'API\TutorizadoController@verificar');
+
     Route::apiResource('centros', 'API\CentroController')->parameters([
         'centros' => 'centro'
     ]);
