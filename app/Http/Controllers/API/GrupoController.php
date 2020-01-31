@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class GrupoController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Grupo::class, 'grupo');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +33,13 @@ class GrupoController extends Controller
      */
     public function store(Request $request)
     {
-        $grupo = Grupo::create(json_decode($request->getContent(), true));
+        $datosPOST = json_decode($request->getContent(), true);
+        $user = $request->user();
+        if(!$user->isSuperAdmin()){
+            $datosPOST['creador'] = Auth::id();
+        }
+        
+        $grupo = Grupo::create($datosPOST);
         return new GrupoResource($grupo);
     }
 

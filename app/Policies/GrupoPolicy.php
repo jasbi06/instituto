@@ -19,7 +19,7 @@ class GrupoPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -31,7 +31,9 @@ class GrupoPolicy
      */
     public function view(User $user, Grupo $grupo)
     {
-        //
+        return $user->id === $grupo->creador
+            ? Response::allow()
+            : Response::deny('No eres el creador de este grupo.');
     }
 
     /**
@@ -42,7 +44,9 @@ class GrupoPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isProfesorCentro() || $user->isTutorGrupo()
+            ? Response::allow()
+            : Response::deny('No está autorizado para realizar esta acción');
     }
 
     /**
