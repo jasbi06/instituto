@@ -34,7 +34,6 @@ class GrupoPolicy
         return $user->id === $grupo->creador
             ? Response::allow()
             : Response::deny('No eres el creador de este grupo.');
-
     }
 
     /**
@@ -96,6 +95,12 @@ class GrupoPolicy
     public function forceDelete(User $user, Grupo $grupo)
     {
         //
+    }
+
+    public function asignaTutor(User $user, Grupo $grupo){
+        return ($user->isCreadorGrupo($grupo) || $user->isCoordinadorCentro($grupo->anyoescolarObject->centroObject))
+            ? Response::allow()
+            : Response::deny('No tienes permisos para modificar éste grupo.');
     }
 
     public function before($user, $ability)

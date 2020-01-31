@@ -67,6 +67,16 @@ class GrupoController extends Controller
         return new GrupoResource($grupo);
     }
 
+    public function asignaTutor(Request $request, $grupo_id, $user_id){
+        $grupo = Grupo::findOrFail($grupo_id);
+        $this->authorize('asignaTutor', $grupo);
+
+        $g = json_decode($request->getContent(), true);
+        $g['tutor'] = $user_id;
+        $grupo->update($g);
+        return new GrupoResource($grupo);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
