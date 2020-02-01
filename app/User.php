@@ -82,22 +82,26 @@ class User extends Authenticatable
     /**
      * Get the matriculas for the user as alumno.
      */
-    public function matriculas() {
+    public function matriculas()
+    {
         return $this->hasMany('App\Matricula', 'alumno');
     }
 
     /**
      * Get the tutorados for the user as tutorado.
      */
-    public function tutorados() {
+    public function tutorados()
+    {
         return $this->hasMany('App\Tutorizado', 'tutorado');
     }
 
-    public function tutores() {
+    public function tutores()
+    {
         return $this->hasMany('App\Tutorizado', 'tutor');
     }
 
-    public function isSuperAdmin() {
+    public function isSuperAdmin()
+    {
         return $this->email === config('app.superadmin_email');
     }
 
@@ -162,7 +166,7 @@ class User extends Authenticatable
     {
         return true;
     }
-
+  
     public function misProfesores(Nivel $nivel = null){
         //tenemos que sacar todas las matrículas que tiene un usuario
         $id = $this->id;
@@ -191,6 +195,15 @@ class User extends Authenticatable
             'id', // Foreign Key Materiaimpartida > Grupo
             'id', // Local Key User
             'grupo' // Local Key Materiaimpartida
+        );
+    }
+  
+    public function misMateriasMatriculadas() {
+        return $this->belongsToMany(
+            'App\Materia',
+            'materiasmatriculadas',
+            'alumno',
+            'materia'
         );
     }
 }
