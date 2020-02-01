@@ -81,25 +81,29 @@ class User extends Authenticatable
     /**
      * Get the matriculas for the user as alumno.
      */
-    public function matriculas() {
+    public function matriculas()
+    {
         return $this->hasMany('App\Matricula', 'alumno');
     }
 
     /**
      * Get the tutorados for the user as tutorado.
      */
-    public function tutorados() {
+    public function tutorados()
+    {
         return $this->hasMany('App\Tutorizado', 'tutorado');
     }
 
-    public function tutores() {
+    public function tutores()
+    {
         return $this->hasMany('App\Tutorizado', 'tutor');
     }
 
-    public function isSuperAdmin() {
+    public function isSuperAdmin()
+    {
         return $this->email === config('app.superadmin_email');
     }
-    
+
     public function isCoordinadorCentro(Centro $centro = null)
     {
         return true;
@@ -123,5 +127,15 @@ class User extends Authenticatable
     public function isTutorGrupo(Grupo $grupo = null)
     {
         return true;
+    }
+
+
+    public function misMateriasMatriculadas() {
+        return $this->belongsToMany(
+            'App\Materia',
+            'materiasmatriculadas',
+            'alumno',
+            'materia'
+        );
     }
 }
