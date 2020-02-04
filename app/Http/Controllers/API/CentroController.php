@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\User;
 use App\Centro;
-use App\User;
 use App\Policies\CentroPolicy;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CentroResource;
@@ -43,13 +42,13 @@ class CentroController extends Controller
         if(!Auth::user()->isSuperAdmin()){
             $centro['coordinador'] = Auth::id();
         }
-      
+
         if(in_array("verificado", $centro)){
                  unset($centro['verificado']);
         }
 
         $centro = Centro::create($centro);
-      
+
         return new CentroResource($centro);
     }
 
@@ -73,13 +72,13 @@ class CentroController extends Controller
      */
     public function update(Request $request, Centro $centro)
     {
-        
+
        $break_data = json_decode($request->getContent(), true);
         if(in_array("verificado", $break_data)){
                  unset($break_data['verificado']);
         }
         $centro = Centro::create(json_decode($request->getContent(), true));
-        
+
         return new CentroResource($centro);
     }
 
@@ -94,18 +93,17 @@ class CentroController extends Controller
     {
         $centro->delete();
     }
-    
+
    public function verificado(User $user, $centro_id)
     {
         $centro=Centro::findOrFail($centro_id);
-        
+
         if ($this->authorize('verificado',$centro)) {
              $centro = Centro::find($centro_id);
              $centro->update(['verificado' => true]);
               return new CentroResource($centro);
 
-        }   
-         
+        }
+
 }
 }
-    
