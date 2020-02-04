@@ -30,13 +30,14 @@ Route::middleware('auth:api')->group(function() {
 
     Route::apiResource('tutorizados', 'API\TutorizadoController');
 
+    Route::apiResource('aulas', 'API\AulaController');
 
     Route::apiResource('centros', 'API\CentroController')->parameters([
         'centros' => 'centro'
     ]);
 
     Route::apiResource('anyosescolares', 'API\AnyoEscolarController')->parameters(['anyosescolares' => 'anyoescolar']);
-  
+
         Route::apiResource('niveles', 'API\NivelController')->parameters([
             'niveles' => 'nivel'
             ]);
