@@ -94,4 +94,10 @@ class GrupoPolicy
     {
         //
     }
+    public function verificar(User $user, Grupo $grupo)
+    {
+        return $user->isCoordinadorCentro()
+            ? Response::allow()
+            : Response::deny('No puedes verificar');
+    }
 }

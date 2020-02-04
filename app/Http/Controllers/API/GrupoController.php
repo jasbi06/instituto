@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Centro;
 use App\Grupo;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GrupoResource;
@@ -28,13 +29,14 @@ class GrupoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $g = json_decode($request->getContent(),true);
+        $g = json_decode($request->getContent(), true);
         $g['creador'] = Auth::id();
+        unset($g['verificado']);
         $grupo = Grupo::create($g, true);
 
         return new GrupoResource($grupo);
@@ -43,7 +45,7 @@ class GrupoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Grupo  $grupo
+     * @param \App\Grupo $grupo
      * @return \Illuminate\Http\Response
      */
     public function show(Grupo $grupo)
@@ -54,8 +56,8 @@ class GrupoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Grupo  $grupo
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Grupo $grupo
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Grupo $grupo)
@@ -67,11 +69,26 @@ class GrupoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Grupo  $grupo
+     * @param \App\Grupo $grupo
      * @return \Illuminate\Http\Response
      */
     public function destroy(Grupo $grupo)
     {
         $grupo->delete();
+    }
+
+    public function verificar(Request $request, Grupo $grupo)
+    {
+        $this->authorize('verificar', $grupo);
+        $grupo['verificado'] = true;
+        $grupo->update([$grupo]);
+        return new GrupoResource($grupo);
+        /*
+        $centro=Centro::findOrFail($centro_id);
+        if($coordinador = Centro::where([['coodinador', $centro_id]])) {
+            $grupo->update(['verificado' => true]);
+        }
+        return redirect('home');
+        */
     }
 }
