@@ -77,18 +77,12 @@ class GrupoController extends Controller
         $grupo->delete();
     }
 
-    public function verificar(Request $request, Grupo $grupo)
+    public function verificar(Request $request, $grupo_id)
     {
+        $grupo = Grupo::findOrFail($grupo_id);
         $this->authorize('verificar', $grupo);
-        $grupo['verificado'] = true;
-        $grupo->update([$grupo]);
+        //$grupo['verificado'] = true;
+        $grupo->update(['verificado' => true]);
         return new GrupoResource($grupo);
-        /*
-        $centro=Centro::findOrFail($centro_id);
-        if($coordinador = Centro::where([['coodinador', $centro_id]])) {
-            $grupo->update(['verificado' => true]);
-        }
-        return redirect('home');
-        */
     }
 }

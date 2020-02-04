@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Grupo;
 use App\User;
+use App\Centro;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
@@ -96,7 +97,7 @@ class GrupoPolicy
     }
     public function verificar(User $user, Grupo $grupo)
     {
-        return $user->isCoordinadorCentro()
+        return $user->isCoordinadorCentro($grupo ->anyoescolarObject->centroObject)
             ? Response::allow()
             : Response::deny('No puedes verificar');
     }

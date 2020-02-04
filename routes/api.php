@@ -51,7 +51,7 @@ Route::middleware('auth:api')->group(function() {
         'materiasimpartidas' => 'materiaimpartida'
     ]);
 
-    Route::put('centros/verifica/{grupo_id}', 'API\GrupoController@verificar');
+    Route::put('centros/{centro_id}/verifica/{grupo_id}', 'API\GrupoController@verificar');
 });
 
 Route::any('/{any}', function (ServerRequestInterface $request) {

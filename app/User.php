@@ -102,8 +102,6 @@ class User extends Authenticatable
 
     public function isCoordinadorCentro(Centro $centro = null)
     {
-        return true;
-/*
         $booleano = true;
 
         if($centro == null){
@@ -124,7 +122,6 @@ class User extends Authenticatable
             }
         }
         return $booleano;
-*/
     }
 
     public function isProfesorCentro(Centro $centro = null)
