@@ -30,6 +30,7 @@ class TutorizadoController extends Controller
     public function store(Request $request)
     {
         $tutorizado = json_decode($request->getContent(), true);
+        unset($tutorizado['verificado']);
         if (!Auth::user()->isSuperAdmin()) {
             $tutorizado['tutor'] = Auth::id();
         }
@@ -71,5 +72,15 @@ class TutorizadoController extends Controller
     public function destroy(Tutorizado $tutorizado)
     {
         $tutorizado->delete();
+    }
+
+    public function verificar(Request $request, $tutor, $token) {
+
+        if($tutorizado = Tutorizado::where([['tutor', $tutor],['verificadoToken', $token]])->first()) {
+            $tutorizado->update(['verificado' => true]);
+        }
+
+        return redirect('home');
+
     }
 }

@@ -19,6 +19,7 @@ class TutorizadoResource extends JsonResource
             'id' => $this->id,
             'tutorado' => $this->tutoradoObject,
             'tutor' => $this->tutorObject,
+            'verificado' => $this->verificado,
             'verificadoToken' => $this->verificadoToken
         ];
     }

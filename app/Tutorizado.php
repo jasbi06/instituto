@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tutorizado extends Model
 {
 
-    protected $fillable = ['tutorado','tutor', 'verificadoToken'];
+    protected $fillable = ['tutorado','tutor', 'verificado', 'verificadoToken'];
 
     public function tutorObject() {
         return $this->belongsTo('App\User', 'tutor');

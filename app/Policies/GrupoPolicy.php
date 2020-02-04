@@ -20,7 +20,7 @@ class GrupoPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -32,7 +32,9 @@ class GrupoPolicy
      */
     public function view(User $user, Grupo $grupo)
     {
-        //
+        return $user->id === $grupo->creador
+            ? Response::allow()
+            : Response::deny('No eres el creador de este grupo.');
     }
 
     /**
@@ -43,9 +45,9 @@ class GrupoPolicy
      */
     public function create(User $user)
     {
-        return $user->isProfesorCentro()
+        return $user->isProfesorCentro() || $user->isTutorGrupo()
             ? Response::allow()
-            : Response::deny('No tienes permiso para crear un nuevo Año Escolar');
+            : Response::deny('No está autorizado para realizar esta acción');
     }
 
     /**
@@ -95,6 +97,7 @@ class GrupoPolicy
     {
         //
     }
+
     public function verificar(User $user, Grupo $grupo)
     {
         return $user->isCoordinadorCentro($grupo ->anyoescolarObject->centroObject)
