@@ -36,7 +36,7 @@ Route::middleware('auth:api')->group(function() {
     ]);
 
     Route::apiResource('anyosescolares', 'API\AnyoEscolarController')->parameters(['anyosescolares' => 'anyoescolar']);
-  
+
         Route::apiResource('niveles', 'API\NivelController')->parameters([
             'niveles' => 'nivel'
             ]);
@@ -57,6 +57,9 @@ Route::middleware('auth:api')->group(function() {
                     'materiasimpartidas' => 'materiaimpartida'
                     ]);
                 });
+    Route::apiResource('faltasProfesores', 'API\FaltaProfesorController')->parameters([
+        'faltasProfesore' => 'faltaProfesor'
+    ]);
 
 Route::any('/{any}', function (ServerRequestInterface $request) {
     $databaseConnection = config('database.default');
