@@ -169,8 +169,21 @@ class User extends Authenticatable {
         return $booleano;
     }
 
-    public function isTutorGrupo(Grupo $grupo = null) {
-        return true;
+    public function isTutorGrupo(Grupo $grupo = null)
+    {
+        $booleano = true;
+        $idUser = $this->id;
+
+        if($grupo == null){
+            //hay que ver todos los grupos existentes y comprobar si algun tutor coincide
+            $encontrado = Grupo::where('tutor' , $idUser)->get();
+            if($encontrado == null) $booleano = false; //no es tutor de ningun grupo
+        } else {
+            //hay que comprobar si es del grupo pasado como valor
+            $idGrupoTutor = $grupo->tutor;
+            if($idUser !== $idGrupoTutor) $booleano = false; //no es tutor del grupo especificado
+        }
+        return $booleano;
     }
 
   
