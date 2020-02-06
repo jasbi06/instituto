@@ -14,7 +14,7 @@ class AddForeignKeysToPeriodosclases extends Migration
     public function up()
     {
         Schema::table('periodosclases', function (Blueprint $table) {
-            $table->foreign('periodo_id')->references('id')->on('periodolectivos')->onDelete('cascade');
+            $table->foreign('periodo_id')->references('id')->on('periodoslectivos')->onDelete('cascade');
             $table->foreign('materiaimpartida_id')->references('id')->on('materiasimpartidas')->onDelete('cascade');
             $table->foreign('aula_id')->references('id')->on('aulas')->onDelete('cascade');
         });
