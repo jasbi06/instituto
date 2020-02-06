@@ -166,7 +166,7 @@ class User extends Authenticatable
     {
         return true;
     }
-  
+
     public function misProfesores(Nivel $nivel = null){
         //tenemos que sacar todas las matrículas que tiene un usuario
         $id = $this->id;
@@ -197,7 +197,7 @@ class User extends Authenticatable
             'grupo' // Local Key Materiaimpartida
         );
     }
-  
+
     public function misMateriasMatriculadas() {
         return $this->belongsToMany(
             'App\Materia',
@@ -205,5 +205,18 @@ class User extends Authenticatable
             'alumno',
             'materia'
         );
+    }
+
+    public function meToca() {
+
+        $users = DB::table('users')
+            ->join('materiasmatriculadas', 'users.id', '=', 'materiasmatriculadas.alumno')
+            ->join('grupo', 'materiasmatriculadas.grupo', '=', 'grupo.id')
+            ->join('anyosescolares', 'grupo.anyoescolar', '=', 'anyosescolares.id')
+            ->join('periodoslectivos', 'anyosescolares.id', '=', 'periodoslectivos.anyoescolar_id')
+            ->join('periodosclases', 'periodoslectivos.id', '=', 'periodosclases.periodo_id')
+            ->select('periodosclases.materia', '', '')
+            ->get();
+
     }
 }

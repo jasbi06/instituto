@@ -45,7 +45,7 @@ Route::middleware('auth:api')->group(function() {
        Route::apiResource('niveles', 'API\NivelController')->parameters([
            'niveles' => 'nivel'
        ]);
-  
+
     Route::put('grupos/asignaTutor/{grupo_id}/{user_id}', 'API\GrupoController@asignaTutor');
 
     Route::apiResource('grupos', 'API\GrupoController');
@@ -63,6 +63,8 @@ Route::middleware('auth:api')->group(function() {
     ]);
 
     Route::apiResource('periodosclases', 'PeriodoclaseController');
+
+    Route::get('horarios/meToca', 'API\UserController@meTocaController');
 
 });
 

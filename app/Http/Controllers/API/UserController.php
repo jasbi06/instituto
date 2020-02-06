@@ -75,4 +75,10 @@ class UserController extends Controller
         // TODO devolver el perfil público
     }
 
+    public function meTocaController() {
+
+        
+
+    }
+
 }
