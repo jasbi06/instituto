@@ -207,16 +207,19 @@ class User extends Authenticatable
         );
     }
 
-    public function meToca() {
+    public function meToca($userId) {
 
-        $users = DB::table('users')
+        $toca = DB::table('users')
             ->join('materiasmatriculadas', 'users.id', '=', 'materiasmatriculadas.alumno')
             ->join('grupo', 'materiasmatriculadas.grupo', '=', 'grupo.id')
             ->join('anyosescolares', 'grupo.anyoescolar', '=', 'anyosescolares.id')
             ->join('periodoslectivos', 'anyosescolares.id', '=', 'periodoslectivos.anyoescolar_id')
             ->join('periodosclases', 'periodoslectivos.id', '=', 'periodosclases.periodo_id')
-            ->select('periodosclases.materia', '', '')
-            ->get();
+            ->select('periodosclases.materiaimpartida_id', 'periodosclases.aula_id')
+            ->where([
+                ['users.id', '=', $userId],
+                [''] //NOW() para comprobar la hora, aqui en la consulta
+            ])->get();
 
     }
 }

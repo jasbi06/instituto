@@ -77,7 +77,7 @@ class UserController extends Controller
 
     public function meTocaController() {
 
-        
+        return Auth::user()->meToca(Auth::user()->$id);
 
     }
 
