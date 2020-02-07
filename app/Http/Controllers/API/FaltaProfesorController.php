@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\FaltaProfesor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FaltaProfesorController extends Controller
 {
@@ -61,5 +62,11 @@ class FaltaProfesorController extends Controller
     public function destroy(FaltaProfesor $faltaProfesor)
     {
         //
+    }
+
+    public function registrarfaltas(FaltaProfesor $faltaProfesor, $momento_inicio, $momento_final)
+    {
+        $momento_inicio ->format('Y-m-d');
+        $faltas = DB::table('faltasprofesores')->where($momento_inicio, '=', date('Y-m-d'))->get();
     }
 }

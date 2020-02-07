@@ -60,6 +60,8 @@ Route::middleware('auth:api')->group(function() {
     Route::apiResource('faltasProfesores', 'API\FaltaProfesorController')->parameters([
         'faltasProfesores' => 'faltaProfesor'
     ]);
+
+    Route::post('/faltasprofesores/registrarFaltas/{momento_inicio}/{momento_final}', 'API\FaltaProfesorController@registrarfaltas');
 });
 
 Route::any('/{any}', function (ServerRequestInterface $request) {
