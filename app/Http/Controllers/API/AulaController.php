@@ -16,7 +16,7 @@ class AulaController extends Controller
      */
     public function index()
     {
-        //
+        return AulaResource::collection(Aula::paginate());
     }
 
     /**
@@ -27,7 +27,12 @@ class AulaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aula = json_decode($request->getContent(), true);
+
+        //falta añadir el policy
+        $centro = Aula::create($aula);
+
+        return new AulaResource($centro);
     }
 
     /**
@@ -38,7 +43,7 @@ class AulaController extends Controller
      */
     public function show(Aula $aula)
     {
-        //
+        return new AulaResource($aula);
     }
 
     /**
@@ -62,6 +67,9 @@ class AulaController extends Controller
      */
     public function destroy(Aula $aula)
     {
-        $aula->delete();
+        if($aula->delete()){
+            echo "Se ha borrado el aula con éxito";
+        }
+
     }
 }
