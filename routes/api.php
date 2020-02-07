@@ -32,7 +32,7 @@ Route::middleware('auth:api')->group(function() {
 
     Route::apiResource('aulas', 'API\AulaController');
 
-    Route::apiResource('periodoslectivos', 'PeriodolectivoController');
+    Route::apiResource('periodoslectivos', 'API\PeriodolectivoController');
 
 
     Route::apiResource('centros', 'API\CentroController')->parameters([
@@ -62,7 +62,9 @@ Route::middleware('auth:api')->group(function() {
         'materiasimpartidas' => 'materiaimpartida'
     ]);
 
-    Route::apiResource('periodosclases', 'PeriodoclaseController');
+    Route::apiResource('periodosclases', 'API\PeriodoclaseController');
+
+    Route::get( 'horarios/docente/{user_id}', 'API\PeriodolectivoController@docente');
 
 });
 

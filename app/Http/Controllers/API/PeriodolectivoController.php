@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use App\Http\Controllers\Controller;
 use App\Periodolectivo;
 use Illuminate\Http\Request;
 use App\Http\Resources\PeriodolectivoResource;
+use Illuminate\Support\Facades\Auth;
 
 class PeriodolectivoController extends Controller
 {
@@ -15,7 +17,7 @@ class PeriodolectivoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    
+
     {
         return PeriodolectivoResource::collection(Periodolectivo::paginate());
     }
@@ -66,4 +68,21 @@ class PeriodolectivoController extends Controller
     {
         $periodo->delete();
     }
+
+    public function docente(){
+
+       if(Auth::user()->isProfesor()){
+
+
+        if(Auth::user()->isSuperAdmin()){
+
+
+        }
+
+       } else {
+           echo "No es un profesor";
+       }
+
+    }
+
 }

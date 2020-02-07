@@ -15,7 +15,7 @@ class User extends Authenticatable {
      *
      * @var array
      */
-    
+
     protected $fillable = [
         'name', 'email', 'password','provider','provider_id'
     ];
@@ -124,6 +124,18 @@ class User extends Authenticatable {
         return $booleano;
     }
 
+    public function isProfesor()
+    {
+        $rtn = false;
+
+
+            $rtn = Materiaimpartida::where('docente',$this->id)->first() ? true : false;
+
+
+        return $rtn;
+    }
+
+
     public function isProfesorCentro(Centro $centro = null)
     {
         $rtn = false;
@@ -186,7 +198,7 @@ class User extends Authenticatable {
         return $booleano;
     }
 
-  
+
     public function misGruposMatriculados() {
         return $this->hasManyThrough(
             'App\Grupo',
@@ -197,7 +209,7 @@ class User extends Authenticatable {
             'id' // Local key on anyosescolares table...
         );
     }
-  
+
     public function misProfesores(Nivel $nivel = null){
         //tenemos que sacar todas las matrículas que tiene un usuario
         $id = $this->id;
@@ -228,7 +240,7 @@ class User extends Authenticatable {
             'grupo' // Local Key Materiaimpartida
         );
     }
-  
+
     public function misMateriasMatriculadas() {
         return $this->belongsToMany(
             'App\Materia',
