@@ -15,7 +15,7 @@ class User extends Authenticatable {
      *
      * @var array
      */
-    
+
     protected $fillable = [
         'name', 'email', 'password','provider','provider_id'
     ];
@@ -186,7 +186,7 @@ class User extends Authenticatable {
         return $booleano;
     }
 
-  
+
     public function misGruposMatriculados() {
         return $this->hasManyThrough(
             'App\Grupo',
@@ -240,17 +240,19 @@ class User extends Authenticatable {
 
     public function meToca($userId) {
 
-        $toca = DB::table('users')
+        $toca = DB::table('users') //cambiar el join para que valla por materiamatriculada->grupo->materiaimpartida->periodosclases
             ->join('materiasmatriculadas', 'users.id', '=', 'materiasmatriculadas.alumno')
             ->join('grupo', 'materiasmatriculadas.grupo', '=', 'grupo.id')
-            ->join('anyosescolares', 'grupo.anyoescolar', '=', 'anyosescolares.id')
-            ->join('periodoslectivos', 'anyosescolares.id', '=', 'periodoslectivos.anyoescolar_id')
-            ->join('periodosclases', 'periodoslectivos.id', '=', 'periodosclases.periodo_id')
+            ->join('materiasimpartidas', 'grupo.id', '=', 'materiasimpartidas.grupo')
+            ->join('periodosclases', 'materiasimpartidas.id', '=', 'periodosclases.materiaimpartida_id')
             ->select('periodosclases.materiaimpartida_id', 'periodosclases.aula_id')
             ->where([
                 ['users.id', '=', $userId],
-                [''] //NOW() para comprobar la hora, aqui en la consulta
+                ['CURRENT_TIME()', '>=', 'periodoslectivos.hora_inicio'],
+                ['CURRENT_TIME()', '<=', 'periodoslectivos.hora_fin']
             ])->get();
+
+        return $toca;
 
     }
 }

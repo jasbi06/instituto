@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Periodoclase;
 use Illuminate\Http\Request;
+use App\Http\Resources\PeriodoclaseResource;
 
 class PeriodoclaseController extends Controller
 {
@@ -26,8 +27,7 @@ class PeriodoclaseController extends Controller
      */
     public function store(Request $request)
     {
-        $periodoclase = json_decode($request->getContent(), true);
-        $periodoclase = Tutorizado::create($periodoclase);
+        $periodoclase = Periodoclase::create(json_decode($request->getContent(), true));
         return new PeriodoclaseResource($periodoclase);
     }
 

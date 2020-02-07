@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Periodolectivo;
 use Illuminate\Http\Request;
+use App\Http\Resources\GrupoResource;
 use App\Http\Resources\PeriodolectivoResource;
 
 class PeriodolectivoController extends Controller
@@ -15,7 +16,7 @@ class PeriodolectivoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    
+
     {
         return PeriodolectivoResource::collection(Periodolectivo::paginate());
     }
