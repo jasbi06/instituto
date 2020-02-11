@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use App\Http\Controllers\Controller;
+use App\Materiaimpartida;
 use App\Periodoclase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\PeriodoclaseResource;
 
 class PeriodoclaseController extends Controller
 {
@@ -65,4 +69,26 @@ class PeriodoclaseController extends Controller
     {
         $periodoclase->delete();
     }
+
+    public function docente($requestid){
+
+        if(Auth::user()->isProfesor() || Auth::user()->isSuperAdmin() ){
+
+          if(Auth::user()->isSuperAdmin()){
+            $id = $requestid;
+          } else {
+            $id = Auth::id();
+          }
+
+           $materiaImpartida = Materiaimpartida::where('docente', $id)->get();
+
+           $horario = Periodoclase::where('materiaimpartida_id', $materiaImpartida->map(function($item, $key){return $item->id;}))->get();
+
+           return  PeriodoclaseResource::collection(($horario));
+
+        } else {
+            echo "Usted no es un profesor";
+        }
+
+     }
 }
