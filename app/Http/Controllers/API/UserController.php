@@ -75,10 +75,4 @@ class UserController extends Controller
         // TODO devolver el perfil público
     }
 
-    public function meTocaController() {
-
-        return Auth::user()->meToca(Auth::user()->$id);
-
-    }
-
 }
