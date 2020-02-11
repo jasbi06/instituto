@@ -32,7 +32,7 @@ Route::middleware('auth:api')->group(function() {
 
     Route::apiResource('aulas', 'API\AulaController');
 
-    Route::apiResource('periodoslectivos', 'PeriodolectivoController');
+    Route::apiResource('periodoslectivos', 'API\PeriodolectivoController');
 
 
     Route::apiResource('centros', 'API\CentroController')->parameters([
@@ -45,7 +45,7 @@ Route::middleware('auth:api')->group(function() {
        Route::apiResource('niveles', 'API\NivelController')->parameters([
            'niveles' => 'nivel'
        ]);
-  
+
     Route::put('grupos/asignaTutor/{grupo_id}/{user_id}', 'API\GrupoController@asignaTutor');
 
     Route::apiResource('grupos', 'API\GrupoController');
@@ -62,7 +62,9 @@ Route::middleware('auth:api')->group(function() {
         'materiasimpartidas' => 'materiaimpartida'
     ]);
 
-    Route::apiResource('periodosclases', 'PeriodoclaseController');
+    Route::apiResource('periodosclases', 'API\PeriodoclaseController');
+
+    Route::get('horarios/meToca', 'API\PeriodoclaseController@meToca');
 
 });
 
