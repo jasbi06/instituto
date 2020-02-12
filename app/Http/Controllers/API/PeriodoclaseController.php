@@ -70,25 +70,21 @@ class PeriodoclaseController extends Controller
         $periodoclase->delete();
     }
 
-    public function docente($requestid){
+    public function getHorarioDocente($id)
+    {
 
-        if(Auth::user()->isProfesor() || Auth::user()->isSuperAdmin() ){
+        $this->authorize('getHorarioDocente', $id);
 
-          if(Auth::user()->isSuperAdmin()){
-            $id = $requestid;
-          } else {
+        if (!Auth::user()->isSuperAdmin()) {
             $id = Auth::id();
-          }
-
-           $materiaImpartida = Materiaimpartida::where('docente', $id)->get();
-
-           $horario = Periodoclase::where('materiaimpartida_id', $materiaImpartida->map(function($item, $key){return $item->id;}))->get();
-
-           return  PeriodoclaseResource::collection(($horario));
-
-        } else {
-            echo "Usted no es un profesor";
         }
 
-     }
+        $materiaImpartida = Materiaimpartida::where('docente', $id)->get();
+
+        $horario = Periodoclase::whereIn('materiaimpartida_id', $materiaImpartida->map(function ($item, $key) {
+            return $item->id;
+        }))->get();
+
+        return  PeriodoclaseResource::collection(($horario));
+    }
 }
