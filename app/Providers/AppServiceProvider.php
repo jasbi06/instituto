@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /*
         if(env('APP_DEBUG')) {
             DB::listen(function($query) {
                 File::append(
@@ -33,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
                 );
             });
         }
+        */
     }
 }
