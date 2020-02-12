@@ -254,7 +254,8 @@ class User extends Authenticatable {
                 ['periodoslectivos.hora_fin', '>=', 'CURRENT_TIME()']
             ])->get();
 
-        return $toca;
+        var_dump($toca);
+        return response()->json($toca);
 
     }
 }
