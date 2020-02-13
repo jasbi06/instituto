@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use App\Periodolectivo;
 use Illuminate\Http\Request;
+use App\Http\Resources\GrupoResource;
 use App\Http\Resources\PeriodolectivoResource;
 
 class PeriodolectivoController extends Controller

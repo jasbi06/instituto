@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Materiaimpartida;
 use App\Periodoclase;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\PeriodoclaseResource;
+use Illuminate\Support\Facades\Auth;
 
 class PeriodoclaseController extends Controller
 {
@@ -30,9 +30,8 @@ class PeriodoclaseController extends Controller
      */
     public function store(Request $request)
     {
-        $periodoclase = json_decode($request->getContent(), true);
-        $periodoclase = Tutorizado::create($periodoclase);
-        return new PeriodoclaseResource($periodoclase);
+        $periodosclase = Periodoclase::create(json_decode($request->getContent(), true));
+        return new PeriodoclaseResource($periodosclase);
     }
 
     /**
@@ -41,9 +40,9 @@ class PeriodoclaseController extends Controller
      * @param  \App\Periodoclase  $periodoclase
      * @return \Illuminate\Http\Response
      */
-    public function show(Periodoclase $periodoclase)
+    public function show(Periodoclase $periodosclase)
     {
-        return new PeriodoclaseResource($periodoclase);
+        return new PeriodoclaseResource($periodosclase);
     }
 
     /**
@@ -53,10 +52,10 @@ class PeriodoclaseController extends Controller
      * @param  \App\Periodoclase  $periodoclase
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Periodoclase $periodoclase)
+    public function update(Request $request, Periodoclase $periodosclase)
     {
-        $periodoclase->update(json_decode($request->getContent(), true));
-        return new PeriodoclaseResource($periodoclase);
+        $periodosclase->update(json_decode($request->getContent(), true));
+        return new PeriodoclaseResource($periodosclase);
     }
 
     /**
@@ -65,9 +64,15 @@ class PeriodoclaseController extends Controller
      * @param  \App\Periodoclase  $periodoclase
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Periodoclase $periodoclase)
+    public function destroy(Periodoclase $periodosclase)
     {
-        $periodoclase->delete();
+        $periodosclase->delete();
+    }
+
+    public function meToca() {
+
+        return Auth::user()->meToca();
+
     }
 
     public function getHorarioDocente($id)
