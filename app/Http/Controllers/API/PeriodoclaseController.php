@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use App\Http\Controllers\Controller;
+use App\Materiaimpartida;
 use App\Periodoclase;
 use Illuminate\Http\Request;
 use App\Http\Resources\PeriodoclaseResource;
@@ -71,5 +73,23 @@ class PeriodoclaseController extends Controller
 
         return Auth::user()->meToca();
 
+    }
+
+    public function getHorarioDocente($id)
+    {
+
+        $this->authorize('getHorarioDocente', new Periodoclase());
+
+        if (!Auth::user()->isSuperAdmin()) {
+            $id = Auth::id();
+        }
+
+        $materiaImpartida = Materiaimpartida::where('docente', $id)->get();
+
+        $horario = Periodoclase::whereIn('materiaimpartida_id', $materiaImpartida->map(function ($item, $key) {
+            return $item->id;
+        }))->get();
+
+        return  PeriodoclaseResource::collection(($horario));
     }
 }
