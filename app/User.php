@@ -240,7 +240,8 @@ class User extends Authenticatable {
 
     public function meToca() {
 
-
+        $horaModificada = time() + (60 * 60);
+        $horaActual = date("h:i:s",$horaModificada);
         $toca = User::
             join('materiasmatriculadas', 'users.id', '=', 'materiasmatriculadas.alumno')
             ->join('grupos', 'materiasmatriculadas.grupo', '=', 'grupos.id')
@@ -248,13 +249,10 @@ class User extends Authenticatable {
             ->join('periodoslectivos', 'anyosescolares.id', '=', 'periodoslectivos.anyoescolar_id')
             ->join('periodosclases', 'periodoslectivos.id', '=', 'periodosclases.periodo_id')
             ->select('periodosclases.materiaimpartida_id', 'periodosclases.aula_id')
-            ->where([
-                ['users.id', '=', $this->id],
-                ['periodoslectivos.hora_inicio', '<=', 'CURRENT_TIME()'],
-                ['periodoslectivos.hora_fin', '>=', 'CURRENT_TIME()']
-            ])->get();
+            ->whereRaw('`users`.`id` = ? and `periodoslectivos`.`hora_inicio` <= CURRENT_TIME() and `periodoslectivos`.`hora_fin` >= CURRENT_TIME()', [2]
+            )->distinct()->get();
 
-        var_dump($toca);
+        //echo $horaActual;
         return response()->json($toca);
 
     }
