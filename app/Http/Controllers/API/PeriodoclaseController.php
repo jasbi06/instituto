@@ -73,7 +73,7 @@ class PeriodoclaseController extends Controller
     public function getHorarioDocente($id)
     {
 
-        $this->authorize('getHorarioDocente', $id);
+        $this->authorize('getHorarioDocente', new Periodoclase());
 
         if (!Auth::user()->isSuperAdmin()) {
             $id = Auth::id();

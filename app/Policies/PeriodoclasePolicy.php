@@ -6,6 +6,7 @@ use App\Periodoclase;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class PeriodoclasePolicy
 {
@@ -94,7 +95,7 @@ class PeriodoclasePolicy
     }
 
 
-    public function getHorarioDocente(User $user)
+    public function getHorarioDocente(User $user, $periodoclase)
     {
         $user = Auth::user();
         return ($user->isProfesor() || $user->isSuperAdmin())
@@ -102,4 +103,11 @@ class PeriodoclasePolicy
             : Response::deny('Usted no tiene permisos para esta acción');
     }
 
+
+    public function before($user, $ability)
+{
+    if ($user->isSuperAdmin()) {
+        return true;
+    }
+}
 }
