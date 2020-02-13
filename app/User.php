@@ -107,8 +107,7 @@ class User extends Authenticatable {
         if($centro == null){
             $idUser = $this->id;
             //hay que ver todos los centros
-            $encontrado = Centro::where('coordinador' , $idUser)->get();
-            if($encontrado == null){
+            if(Centro::where('coordinador' , $idUser)->get()->count() == 0){
                 //no es coordinador
                 $booleano = false;
             }
@@ -123,6 +122,12 @@ class User extends Authenticatable {
         }
         return $booleano;
     }
+
+    public function isProfesor()
+    {
+        return $this->isProfesorCentro();
+    }
+
 
     public function isProfesorCentro(Centro $centro = null)
     {

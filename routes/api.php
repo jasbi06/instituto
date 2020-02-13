@@ -64,6 +64,7 @@ Route::middleware('auth:api')->group(function() {
 
     Route::apiResource('periodosclases', 'API\PeriodoclaseController');
 
+    Route::get( 'horarios/docente/{user_id}', 'API\PeriodoclaseController@getHorarioDocente');
     Route::get('horarios/meToca', 'API\PeriodoclaseController@meToca');
 
 });
