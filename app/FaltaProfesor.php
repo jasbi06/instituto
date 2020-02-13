@@ -13,7 +13,7 @@ class FaltaProfesor extends Model
      */
     public function periodoclaseObject()
     {
-        return $this->belongsTo('App\Periodosclases', 'FaltaProfesor');
+        return $this->belongsTo('App\Periodosclase', 'FaltaProfesor');
     }
 
     /**

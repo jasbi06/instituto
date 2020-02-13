@@ -30,12 +30,20 @@ Route::middleware('auth:api')->group(function() {
 
     Route::apiResource('tutorizados', 'API\TutorizadoController');
 
+    Route::apiResource('aulas', 'API\AulaController');
+
+    Route::apiResource('periodoslectivos', 'API\PeriodolectivoController');
+
 
     Route::apiResource('centros', 'API\CentroController')->parameters([
         'centros' => 'centro'
     ]);
 
     Route::apiResource('anyosescolares', 'API\AnyoEscolarController')->parameters(['anyosescolares' => 'anyoescolar']);
+
+    Route::apiResource('niveles', 'API\NivelController')->parameters([
+        'niveles' => 'nivel'
+    ]);
 
     Route::apiResource('niveles', 'API\NivelController')->parameters([
         'niveles' => 'nivel'
@@ -62,6 +70,11 @@ Route::middleware('auth:api')->group(function() {
     ]);
 
     Route::post('/faltasprofesores/registrarFaltas/{momento_inicio}/{momento_final}', 'API\FaltaProfesorController@registrarfaltas');
+
+    Route::apiResource('periodosclases', 'API\PeriodoclaseController');
+
+    Route::get('horarios/meToca', 'API\PeriodoclaseController@meToca');
+
 });
 
 Route::any('/{any}', function (ServerRequestInterface $request) {
